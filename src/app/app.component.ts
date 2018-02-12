@@ -5,7 +5,6 @@ import { IEventLoop } from '@models/callstack.model';
 const eventLoop: IEventLoop = {
   callStack: [],
   readyStack: [],
-  isRunning: false,
   level: 0,
   parent: null
 };
@@ -29,8 +28,8 @@ export class AppComponent {
     this.btnLabel = 'Next';
     this.eventLoop.callStack = [];
     this.eventLoop.readyStack = [];
-    this.eventLoop.isRunning = false;
     this.eventLoop.level = 0;
+    this.eventLoop.parent = null;
     this.launchRoutine();
   }
   @InEventLoop(eventLoop)
@@ -68,10 +67,10 @@ export class AppComponent {
 
   nextMethodCall() {
     const readyStack = this.eventLoop.readyStack;
+    const callStack = this.eventLoop.callStack;
     if (!readyStack.length) {
       this.resetRoutine();
     } else {
-      eventLoop.parent = eventLoop.readyStack[0];
       readyStack[0].func();
       if (!readyStack.length) {
         this.btnLabel = 'Reset';

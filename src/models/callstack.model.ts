@@ -1,7 +1,6 @@
 export interface IEventLoop {
   callStack: IStackFunction[];
   readyStack: IStackFunction[];
-  isRunning: boolean;
   level: number;
   parent: IStackFunction;
 }
